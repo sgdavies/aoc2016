@@ -1,0 +1,26 @@
+cpy a b
+dec b
+cpy a d  # jump back here. b is 1 less.
+cpy 0 a
+cpy b c
+mult a c d ##inc a
+nop dec c
+nop jnz c -2
+nop dec d
+nop jnz d -5  # add c to a, d times: a = c*d, c=0, d=0
+dec b
+cpy b c
+cpy c d
+mvadd d c ##dec d  # d->0, c->c+d
+nop inc c
+nop jnz d -2
+tgl c
+cpy -16 c
+jnz 1 c
+cpy 95 c
+jnz 95 d  # Assume this gets toggled to cpy, or we'd be stuck?
+inc a
+inc d  # Assume this must get toggled at some point, or we'd be stuck
+jnz d -2
+inc c  # Again, assume this must get toggled to dec at some point
+jnz c -5
